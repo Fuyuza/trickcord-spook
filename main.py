@@ -47,7 +47,7 @@ async def trickortreat(guild):
 
 async def connect_nodes():
   await candy.wait_until_ready()
-  await wavelink.NodePool.create_node(bot=candy, host='lavalink.oops.wtf', port=2000, password='www.freelavalink.ga')
+  await wavelink.NodePool.create_node(bot=candy, host='lava.islantay.tk', port=443, password='AmeliaWatsonisTheBest')
 
 async def audio_start(channel):
   audio = await wavelink.NodePool.get_node().get_tracks(wavelink.YouTubeTrack, 'https://youtu.be/82klOP4jTRg')
