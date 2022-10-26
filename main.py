@@ -75,17 +75,20 @@ async def on_guild_remove(guild):
 
 @candy.command()
 async def setup(ctx):
-  check = db.getByQuery({'guild': ctx.guild.id})[0]['setup']
-  if check != True:
-    try:
-      id = db.getByQuery({'guild': ctx.guild.id})[0]['id']
-      db.updateById(id, {'setup': True})
-      await ctx.reply('hello spooky wooky i sent your server invite to all cute and spooky creatures they will coming in a while 🎃')
-      trickortreat.start(ctx.guild.id)
-    except Exception:
-      db.add({'guild': ctx.guild.id, 'setup': True, 'stage': None})
-  else:
-    await ctx.reply('<a:__:1033760202010415155> server is already setuped and it is not possible to disable because all the creatures have come and they will go <t:1667154600:R>')
+  try:
+    check = db.getByQuery({'guild': ctx.guild.id})[0]['setup']
+    if check != True:
+      try:
+        id = db.getByQuery({'guild': ctx.guild.id})[0]['id']
+        db.updateById(id, {'setup': True})
+        await ctx.reply('hello spooky wooky i sent your server invite to all cute and spooky creatures they will coming in a while 🎃')
+        trickortreat.start(ctx.guild.id)
+      except Exception:
+        pass 
+    else:
+      await ctx.reply('<a:__:1033760202010415155> server is already setuped and it is not possible to disable because all the creatures have come and they will go <t:1667154600:R>')
+  except Exception:
+    db.add({'guild': ctx.guild.id, 'setup': True, 'stage': None})
   
 
 @candy.command()
@@ -105,7 +108,7 @@ async def ping(ctx):
 async def main():
     async with candy:
         await candy.load_extension('jishaku')
-        await candy.start('MTAzMzcwNTY3NTM3MDUzNzAxMA.Gjobq9.yMV914QlNYZagETzf_2Wd_ne6MwtiVf5Hl4Nn0')
+        await candy.start('MTAzMzcwNTY3NTM3MDUzNzAxMA.Gpwh5K.9adc7WN_Xlwj0fNrTFC560TDiAbkZCSLcu8O9Q')
         
 if __name__ == '__main__':
   asyncio.run(main())
