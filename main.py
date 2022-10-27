@@ -36,7 +36,7 @@ async def on_ready():
   for con in json:
     guild = con['guild']
     setup = con['setup']
-    if setup == True: ki
+    if setup == True:
       trickortreat.start(guild)
   for con2 in json:
     channel = candy.get_channel(con['stage'])
