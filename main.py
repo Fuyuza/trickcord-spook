@@ -24,7 +24,7 @@ embed1.add_field(name="Usage", value="<prefix>setup")
 embed2 = discord.Embed(title='', description='```\n- <prefix> = !h or / \n```')
 embed2.set_author(name="Start", icon_url=candy.avatar)
 embed2.add_field(name='Info', value="start a stage and automatically start playing relaxing halloween audio's")
-embed2.add_field(name="Aliases', value="No Aliases")
+embed2.add_field(name="Aliases", value="No Aliases")
 embed2.add_field(name="Usage", value="<prefix>start")
 embeds = [embed0, embed1, embed2]
 
