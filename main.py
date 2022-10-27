@@ -93,13 +93,16 @@ async def setup(ctx):
 
 @candy.command()
 async def start(ctx):
-  channel = await ctx.guild.create_stage_channel(name='halloween lofi', topic='all the creatures are tired and they want to listen relaxing music')
-  db.updateByQuery({'guild': ctx.guild.id}, {'stage': channel.id})
-  candy.loop.create_task(audio_start(channel))
-  await ctx.send(await channel.create_invite())
-  embed = discord.Embed(title='🎃 Note from Fuser(Owner)', description='\nHello Dear discord\nIf you are thinking to take against this bot because of music system so please read this first the bot is not taking audios from youtube its predownloaded audios in my folder and bot playing the audios from it\n~ Happy halloween Discord', color=0xE67E22)
-  embed.set_footer(text='if you are an normal user then you dont need to read this')
-  await ctx.send(embed=embed)
+  if db.getByQuery({'guild':ctx.guild.id})[0]['setup'] != False:
+    channel = await ctx.guild.create_stage_channel(name='halloween lofi', topic='all the creatures are tired and they want to listen relaxing music')
+    db.updateByQuery({'guild': ctx.guild.id}, {'stage': channel.id})
+    candy.loop.create_task(audio_start(channel))
+    await ctx.send(await channel.create_invite())
+    embed = discord.Embed(title='🎃 Note from Fuser(Owner)', description='\nHello Dear discord\nIf you are thinking to take against this bot because of music system so please read this first the bot is not taking audios from youtube its predownloaded audios in my folder and bot playing the audios from it\n~ Happy halloween Discord', color=0xE67E22)
+    embed.set_footer(text='if you are an normal user then you dont need to read this')
+    await ctx.send(embed=embed)
+  else:
+    await ctx.send('you can't start a stage until you don't setup the bot using `!hsetup` command')
  
 @candy.command()
 async def ping(ctx):
