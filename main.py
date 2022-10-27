@@ -41,8 +41,6 @@ async def on_ready():
 async def trickortreat(user):
   try:
     if db.getByQuery({'guild': user.guild.id})[0]['setup'] != False:
-      selc = 0
-      while selc < 1:
         select = user
         if select.bot == False:
           selected = candy.get_user(select.id)
@@ -52,7 +50,6 @@ async def trickortreat(user):
           embed.set_image(url="https://media.discordapp.net/attachments/1029697849350443061/1033786732669321318/maxresdefault_3.jpg")
           embed.set_footer(text=f'from {by}')
           await selected.send(content='<:__:1033704628988153927> knock knock!!', embed=embed)
-          selc = 1
   except Exception:
     pass
 
