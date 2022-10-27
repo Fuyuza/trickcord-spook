@@ -34,34 +34,28 @@ async def on_ready():
   print('spookotuber ready')
   json = db.getAll()
   for con in json:
-    guild = con['guild']
-    setup = con['setup']
-    if setup == True:
-      trickortreat.start(guild)
-  for con2 in json:
     channel = candy.get_channel(con['stage'])
     if channel != None:
       candy.loop.create_task(audio_start(channel))
 
-@tasks.loop(seconds=300)
-async def trickortreat(guild):
-  guild = candy.get_guild(guild)
-  users = []
-  async for member in guild.fetch_members(limit=None):
-    users.append(member)
-  selc = 0
-  while selc < 1:
-    select = random.choice(users)
-    if select.bot == True:
-      users.clear()
-      selected = candy.get_user(select.id)
-      by = random.choice(['vampire', 'ghost', 'bat', 'zombie', 'monster', 'dog', 'your friend', 'cat', 'funny clown', 'your neighbors', 'puppies', 'cow', 'horse'])
-      embed = discord.Embed(title='**<a:__:1033702719090872391> Trick or Treat**', description='choose with below buttons <a:__:1033760202010415155>', color=0x00005)
-      embed.set_thumbnail(url="https://media.discordapp.net/attachments/1029697849350443061/1033775680376295524/BlackYellowEgret-max-1mb.gif")
-      embed.set_image(url="https://media.discordapp.net/attachments/1029697849350443061/1033786732669321318/maxresdefault_3.jpg")
-      embed.set_footer(text=f'from {by}')
-      await selected.send(content='<:__:1033704628988153927> knock knock!!', embed=embed)
-      selc = 1
+async def trickortreat(user):
+  try:
+    if db.getByQuery({'guild': user.guild.id})[0]['setup'] != False:
+      selc = 0
+      while selc < 1:
+        select = user
+        if select.bot == False:
+          users.clear()
+          selected = candy.get_user(select.id)
+          by = random.choice(['vampire', 'ghost', 'bat', 'zombie', 'monster', 'dog', 'your friend', 'cat', 'funny clown', 'your neighbors', 'puppies', 'cow', 'horse'])
+          embed = discord.Embed(title='**<a:__:1033702719090872391> Trick or Treat**', description='choose with below buttons <a:__:1033760202010415155>', color=0x00005)
+          embed.set_thumbnail(url="https://media.discordapp.net/attachments/1029697849350443061/1033775680376295524/BlackYellowEgret-max-1mb.gif")
+          embed.set_image(url="https://media.discordapp.net/attachments/1029697849350443061/1033786732669321318/maxresdefault_3.jpg")
+          embed.set_footer(text=f'from {by}')
+          await selected.send(content='<:__:1033704628988153927> knock knock!!', embed=embed)
+          selc = 1
+  except Exception:
+    pass
 
 
 async def connect_nodes():
@@ -133,6 +127,16 @@ async def ping(ctx):
 @candy.command()
 async def help(ctx):
     await Paginator.Simple(PreviousButton=Button(emoji='<:__:1035096189957320744>'), NextButton=Button(emoji='<:__:1035095602003980340>'), PageCounterStyle=discord.ButtonStyle.blurple, InitialPage=0).start(ctx, pages=embeds)
+
+@candy.event
+async def on_message(message):
+  rndno = random.randint(5, 16)
+  messages = []
+  messages.append(message.author.id)
+  if len(messages) >= rndno:
+    user_id = random.choice(messages)
+    user = candy.get_member(user_id)
+    await trickortreat(user.id)
 
 async def main():
     async with candy:
