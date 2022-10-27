@@ -133,7 +133,7 @@ async def on_message(message):
     author = random.choice(messages)
     await trickortreat(author)
     messages.clear()
-  await bot.process_commands(message)
+  await candy.process_commands(message)
 
 async def main():
     async with candy:
