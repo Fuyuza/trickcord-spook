@@ -128,15 +128,18 @@ async def ping(ctx):
 async def help(ctx):
     await Paginator.Simple(PreviousButton=Button(emoji='<:__:1035096189957320744>'), NextButton=Button(emoji='<:__:1035095602003980340>'), PageCounterStyle=discord.ButtonStyle.blurple, InitialPage=0).start(ctx, pages=embeds)
 
+no = 0
 @candy.event
 async def on_message(message):
-  rndno = random.randint(5, 16)
   messages = []
   messages.append(message.author.id)
-  if len(messages) >= rndno:
+  if no == 0:
+    no = random.randint(5, 16)
+  if len(messages) >= no and no != 0:
     user_id = random.choice(messages)
     user = candy.get_member(user_id)
     await trickortreat(user.id)
+    no = 0
 
 async def main():
     async with candy:
