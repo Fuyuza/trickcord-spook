@@ -1,13 +1,32 @@
 import discord
 from discord.ext import commands, tasks
+from discord.ui import View, Button
 import random
 import asyncio
 from pysondb import db
 import wavelink
 import jishaku
+import Paginator
 
 candy = commands.Bot(command_prefix="!h", intents=discord.Intents().all(), strip_after_prefix=True)
+candy.remove_command('help')
 db = db.getDb("guilddb.json")
+embed0 = discord.Embed(title='')
+embed0.add_field(name='<prefix>setup', value='setup the bot for you automatically')
+embed0.add_field(name='<prefix>start', value="start a stage and automatically start playing relaxing halloween audio's")
+embed0.add_field(name='<prefix>ping', value="show latency of bot")
+embed0.set_author(name='**📒 Help command 📒**', icon_url="https://cdn.discordapp.com/avatars/688672323032580140/3c71102710889f74c72fc69e3477261d.webp?size=2048")
+embed1 = discord.Embed(title='', description='```\n- <prefix> = !h or / \n```')
+embed1.set_author(name="Setup", icon_url=candy.avatar)
+embed1.add_field(name='Info', value='setup the bot for you automatically')
+embed1.add_field(name='Aliases', value="No Aliases")
+embed1.add_field(name="Usage", value="<prefix>setup")
+embed2 = discord.Embed(title='', description='```\n- <prefix> = !h or / \n```')
+embed2.set_author(name="Start", icon_url=candy.avatar)
+embed2.add_field(name='Info', value="start a stage and automatically start playing relaxing halloween audio's")
+embed2.add_field(name="Aliases', value="No Aliases")
+embed2.add_field(name="Usage", value="<prefix>start")
+embeds = [embed0, embed1, embed2]
 
 @candy.event
 async def on_ready():
@@ -17,7 +36,7 @@ async def on_ready():
   for con in json:
     guild = con['guild']
     setup = con['setup']
-    if setup == True:
+    if setup == True: ki
       trickortreat.start(guild)
   for con2 in json:
     channel = candy.get_channel(con['stage'])
@@ -110,6 +129,10 @@ async def start(ctx):
 @candy.command()
 async def ping(ctx):
     await ctx.send(round(candy.latency * 1000))
+
+@candy.command()
+async def help(ctx):
+    await Paginator.Simple(InitialPage=0, timeout=60).start(ctx, pages=embeds)
 
 async def main():
     async with candy:
