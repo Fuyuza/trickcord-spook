@@ -102,7 +102,7 @@ async def start(ctx):
     embed.set_footer(text='if you are an normal user then you dont need to read this')
     await ctx.send(embed=embed)
   else:
-    await ctx.send('you can't start a stage until you don't setup the bot using `!hsetup` command')
+    await ctx.send("you can't start a stage until you don't setup the bot using `!hsetup` command")
  
 @candy.command()
 async def ping(ctx):
