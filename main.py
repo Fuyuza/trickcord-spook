@@ -45,7 +45,6 @@ async def trickortreat(user):
       while selc < 1:
         select = user
         if select.bot == False:
-          users.clear()
           selected = candy.get_user(select.id)
           by = random.choice(['vampire', 'ghost', 'bat', 'zombie', 'monster', 'dog', 'your friend', 'cat', 'funny clown', 'your neighbors', 'puppies', 'cow', 'horse'])
           embed = discord.Embed(title='**<a:__:1033702719090872391> Trick or Treat**', description='choose with below buttons <a:__:1033760202010415155>', color=0x00005)
@@ -132,11 +131,10 @@ no = 15
 messages = []
 @candy.event
 async def on_message(message):
-  messages.append(message.author.id)
+  messages.append(message.author)
   if len(messages) >= no:
-    user_id = random.choice(messages)
-    user = candy.get_member(user_id)
-    await trickortreat(user.id)
+    author = random.choice(messages)
+    await trickortreat(author)
     messages.clear()
 
 async def main():
