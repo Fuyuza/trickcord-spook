@@ -16,6 +16,7 @@ embed0.add_field(name='<prefix>setup', value='setup the bot for you automaticall
 embed0.add_field(name='<prefix>start', value="start a stage and automatically start playing relaxing halloween audio's")
 embed0.add_field(name='<prefix>ping', value="show latency of bot")
 embed0.set_author(name='📒 Help command 📒', icon_url="https://cdn.discordapp.com/avatars/688672323032580140/3c71102710889f74c72fc69e3477261d.webp?size=2048")
+embed0.add_field(name='<:__:1035209966191120444><:__:1035210037892747336> Icons credit', value='<:__:1035211550123888753> [icons](https://discord.gg/icons-859387663093727263)')
 embed1 = discord.Embed(title='', description='```\n- <prefix> = !h or / \n```')
 embed1.set_author(name="Setup", icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
 embed1.add_field(name='Info', value='setup the bot for you automatically')
