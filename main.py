@@ -132,7 +132,7 @@ async def ping(ctx):
 
 @candy.command()
 async def help(ctx):
-    await Paginator.Simple(PreviewsButton=Button(style=discord.ButtonStyle.grey, emoji='<:__:1035096189957320744>', NextButton=Button(style=discord.ButtonStyle.grey, emoji='<:__:1035095602003980340>', PageCounterStyle=discord.ButtonStyle.blurple).start(ctx, pages=embeds)
+    await Paginator.Simple(PreviewsButton=Button(style=discord.ButtonStyle.grey, emoji='<:__:1035096189957320744>'), NextButton=Button(style=discord.ButtonStyle.grey, emoji='<:__:1035095602003980340>'), PageCounterStyle=discord.ButtonStyle.blurple).start(ctx, pages=embeds)
 
 async def main():
     async with candy:
