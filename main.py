@@ -164,6 +164,7 @@ async def fight(ctx):
     await msg.edit(embed=embed2, view=view)
     await asyncio.sleep(1)
     view.remove_item(timerbtn)
+  previoushuffle = None
   while opponent_health > 0:
     embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
     attackmoji = ['🟩','🟩','🟩','🟩','🟩']
@@ -171,10 +172,11 @@ async def fight(ctx):
     hit = Button(label='Hit!', style=discord.ButtonStyle.red)
     miss = Button(label='Miss', style=discord.ButtonStyle.grey)
     miss2 = Button(label='Miss', style=discord.ButtonStyle.grey)
-    for j in range(3):
-      btn = [hit, miss, miss2]
-      view.add_item(random.choice(btn))
-      btn.remove(random.choice(btn))
+    btns = [hit, miss, miss2]
+    random.shuffle(btns) if btns!=previoushuffle else random.shuffle(btns)
+    previoushuffle = btns
+    for btn in btns:
+      view.add_item(btn)
     await msg.edit(embed=embed3, view=view)
     opponent_health = 0
 
