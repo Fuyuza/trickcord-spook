@@ -163,11 +163,19 @@ async def fight(ctx):
     embed2 = embed
     await msg.edit(embed=embed2, view=view)
     await asyncio.sleep(1)
+    view.remove_item(timerbtn)
   while opponent_health > 0:
     embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
     attackmoji = ['🟩','🟩','🟩','🟩','🟩']
     embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
-    await msg.edit(embed=embed3)
+    hit = Button(label='Hit!', style=discord.ButtonStyle.red)
+    miss = Button(label='Miss', style=discord.ButtonStyle.grey)
+    miss2 = Button(label='Miss', style=discord.ButtonStyle.grey)
+    for j in range(3):
+      btn = [hit, miss, miss2]
+      view.add_item(random.choice(btn))
+      btn.remove(random.choice(btn))
+    await msg.edit(embed=embed3, view=view)
     opponent_health = 0
 
 async def main():
