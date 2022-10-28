@@ -145,7 +145,7 @@ async def on_message(message):
   await candy.process_commands(message)
 
 @candy.command()
-async fight(ctx):
+async def fight(ctx):
   candies = db.getByQuery({'users': {author.id}})
   health = 100
   opponent_health = 100
