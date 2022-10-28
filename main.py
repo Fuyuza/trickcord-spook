@@ -143,14 +143,24 @@ async def on_message(message):
 
 @candy.command()
 async def fight(ctx):
-  candies = db.getByQuery({'users': f'{author.id}'})[0]['treats']
+  candies = db.getByQuery({'guild': ctx.guild.id})[0]['users'][0][f"{ctx.author.id}"]['treats']
   health = 100
   opponent_health = 100
   opponent_candies = random.randint(10, 50)
   ghosts = ['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton']
-  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - {health} | In bag [{candies}]\n{random.choice(ghosts)} - {opponent_health} | {opponent_candies}')
+  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
-  await ctx.send(embed=embed)
+  count = 3
+  timerbtn = Button(label=count, style=discord.ButtonStyle.grey, disabled=True)
+  view = View()
+  view.add_item(timerbtn)
+  msg = await ctx.send(embed=embed, view=view)
+  for i in range(4):
+    view.remove_item(timerbtn)
+    counter = counter - 1
+    timerbtn = Button(label=count, style=discord.ButtonStyle.grey, disabled=True)
+    view.add_item(timerbtn)
+    await msg.edit(embed=embed, view=view)
 
 async def main():
     async with candy:
