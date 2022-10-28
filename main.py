@@ -134,9 +134,6 @@ no = 15
 messages = []
 @candy.event
 async def on_message(message):
-  users = db.getByQuery({'guild': message.guild.id})[0]['users']
-  if author.id not in users:
-    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None, 'users': {f'{author.id}': {'coins': 0, 'treats': 0}}})
   messages.append(message.author)
   if len(messages) >= no:
     author = random.choice(messages)
@@ -146,11 +143,12 @@ async def on_message(message):
 
 @candy.command()
 async def fight(ctx):
-  candies = db.getByQuery({'users': {author.id}})
+  candies = db.getByQuery({'users': f'{{author.id}}})[0]['treats']
   health = 100
   opponent_health = 100
+  opponent_candies = random.randint(10, 50)
   ghosts = ['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton']
-  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - {health} \n{random.choice(ghosts)} - {opponent_health}')
+  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - {health} | In bag [{candies}]\n{random.choice(ghosts)} - {opponent_health} | {opponent_candies}')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
   await ctx.send(embed=embed)
 
