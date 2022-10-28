@@ -76,7 +76,7 @@ async def audio_start(channel):
 
 @candy.event
 async def on_guild_join(guild):
-  db.add({'guild': guild.id, 'setup': False, 'stage': None})
+  db.add({'guild': guild.id, 'setup': False, 'stage': None, 'users':{}})
 
 @candy.event
 async def on_guild_remove(guild):
@@ -103,7 +103,7 @@ async def setup(ctx):
     else:
       await ctx.reply('<a:__:1033760202010415155> server is already setuped and it is not possible to disable because all the creatures have come and they will go <t:1667154600:R>')
   except Exception:
-    db.add({'guild': ctx.guild.id, 'setup': True, 'stage': None})
+    db.add({'guild': ctx.guild.id, 'setup': True, 'stage': None, 'users':{}})
   
 
 @candy.command()
@@ -120,7 +120,7 @@ async def start(ctx):
     else:
       await ctx.send("you can't start a stage until you don't setup the bot using `!hsetup` command")
   except Exception:
-    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None})
+    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None, 'users': {}})
 
 @candy.command()
 async def ping(ctx):
@@ -134,12 +134,25 @@ no = 15
 messages = []
 @candy.event
 async def on_message(message):
+  users = db.getByQuery({'guild': message.guild.id})[0]['users']
+  if author.id not in users:
+    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None, 'users': {f'{author.id}': {'coins': 0, 'treats': 0})
   messages.append(message.author)
   if len(messages) >= no:
     author = random.choice(messages)
     await trickortreat(author)
     messages.clear()
   await candy.process_commands(message)
+
+@candy.command()
+async fight(ctx):
+  candies = db.getByQuery({'users': {author.id}})
+  health = 100
+  opponent_health = 100
+  ghosts = ['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton']
+  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - {health} \n{random.choice(ghosts)} - {opponent_health}')
+  embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
+  await ctx.send(embed=embed)
 
 async def main():
     async with candy:
