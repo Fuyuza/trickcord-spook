@@ -94,9 +94,9 @@ async def setup(ctx):
         await ctx.reply('hello spooky wooky i sent your server invite to all cute and spooky creatures they will coming in a while 🎃')
         embed = discord.Embed(title='', description='The main motive of this bot is to make your server special and halloween special', color=0xE67E22)
         embed.set_author(name='Starter Guide', icon_url='https://cdn.discordapp.com/emojis/1035444728776380447.png')
-        embed.add_field(name='How To Setup', value='use !hsetup or /setup to setup, for more info check !hhelp or /help')
-        embed.add_field(name='How to play', value="The creatures will knock on your dm door's but its required to own a house creatures will not knock on your door until they don't get any house with your name")
-        embed.add_field(name='Earn Coins', value="You have to keep the chat active and chating with your friend for each 2 messages you will get 1 coin to buy a house you don't need any amount of coins you will get a starter house for free to buy for more info check /shop")
+        embed.add_field(name='<:__:1035478606266241086> How To Setup', value='use !hsetup or /setup to setup, for more info check !hhelp or /help')
+        embed.add_field(name='<:__:1035478606266241086> How to play', value="The creatures will knock on your dm door's but its required to own a house creatures will not knock on your door until they don't get any house with your name")
+        embed.add_field(name='<:__:1035478606266241086> Earn Coins', value="You have to keep the chat active and chating with your friend for each 2 messages you will get 1 coin to buy a house you don't need any amount of coins you will get a starter house for free to buy for more info check /shop")
         await ctx.send(embed=embed)
       except Exception:
         pass 
