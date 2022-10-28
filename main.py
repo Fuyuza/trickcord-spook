@@ -156,13 +156,19 @@ async def fight(ctx):
   view.add_item(timerbtn)
   msg = await ctx.send(embed=embed, view=view)
   for i in range(3):
-    await asyncio.sleep(1)
     counter = counter - 1
     view.remove_item(timerbtn)
     timerbtn = Button(label=str(counter), style=discord.ButtonStyle.grey, disabled=True)
     view.add_item(timerbtn)
     embed2 = embed
     await msg.edit(embed=embed2, view=view)
+    await asyncio.sleep(1)
+  while opponent_health > 0:
+    embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
+    attackmoji = ['🟩','🟩','🟩','🟩','🟩']
+    embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
+    await msg.edit(embed=embed3)
+    opponent_health = 0
 
 async def main():
     async with candy:
