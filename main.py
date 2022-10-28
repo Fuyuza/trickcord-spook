@@ -96,7 +96,7 @@ async def setup(ctx):
         embed.set_author(name='Starter Guide <:__:1035444728776380447>', icon_url=ctx.guild.icon)
         embed.add_field(name='How To Setup', value='use !hsetup or /setup to setup, for more info check !hhelp or /help')
         embed.add_field(name='How to play', value="The creatures will knock on your dm door's but its required to own a house creatures will not knock on your door until they don't get any house with your name")
-        embed.add_field(name='Earn Coins', value="You have to keep the chat active and chating with your friend for each 2 messages you will get 1 coin to buy a house you will need 10 coins to buy for more info check !h
+        embed.add_field(name='Earn Coins', value="You have to keep the chat active and chating with your friend for each 2 messages you will get 1 coin to buy a house you will need 10 coins to buy for more info check /shop")
       except Exception:
         pass 
     else:
