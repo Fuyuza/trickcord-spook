@@ -156,8 +156,9 @@ async def fight(ctx):
   view.add_item(timerbtn)
   msg = await ctx.send(embed=embed, view=view)
   for i in range(4):
-    view.remove_item(timerbtn)
+    await asyncio.sleep(1)
     counter = counter - 1
+    view.remove_item(timerbtn)
     timerbtn = Button(label=count, style=discord.ButtonStyle.grey, disabled=True)
     view.add_item(timerbtn)
     await msg.edit(embed=embed, view=view)
