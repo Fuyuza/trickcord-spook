@@ -143,7 +143,7 @@ async def on_message(message):
 
 @candy.command()
 async def fight(ctx):
-  candies = db.getByQuery({'users': f'{author.id}})[0]['treats']
+  candies = db.getByQuery({'users': f'{author.id}'})[0]['treats']
   health = 100
   opponent_health = 100
   opponent_candies = random.randint(10, 50)
