@@ -150,8 +150,8 @@ async def fight(ctx):
   ghosts = ['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton']
   embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
-  count = 3
-  timerbtn = Button(label=count, style=discord.ButtonStyle.grey, disabled=True)
+  counter = 3
+  timerbtn = Button(label=counter, style=discord.ButtonStyle.grey, disabled=True)
   view = View()
   view.add_item(timerbtn)
   msg = await ctx.send(embed=embed, view=view)
@@ -159,7 +159,7 @@ async def fight(ctx):
     await asyncio.sleep(1)
     counter = counter - 1
     view.remove_item(timerbtn)
-    timerbtn = Button(label=str(count), style=discord.ButtonStyle.grey, disabled=True)
+    timerbtn = Button(label=str(counter), style=discord.ButtonStyle.grey, disabled=True)
     view.add_item(timerbtn)
     embed2 = embed
     await msg.edit(embed=embed2, view=view)
