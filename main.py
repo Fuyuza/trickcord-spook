@@ -161,7 +161,8 @@ async def fight(ctx):
     view.remove_item(timerbtn)
     timerbtn = Button(label=str(count), style=discord.ButtonStyle.grey, disabled=True)
     view.add_item(timerbtn)
-    await msg.edit(embed=embed, view=view)
+    embed2 = embed
+    await msg.edit(embed=embed2, view=view)
 
 async def main():
     async with candy:
