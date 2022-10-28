@@ -136,7 +136,7 @@ messages = []
 async def on_message(message):
   users = db.getByQuery({'guild': message.guild.id})[0]['users']
   if author.id not in users:
-    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None, 'users': {f'{author.id}': {'coins': 0, 'treats': 0})
+    db.add({'guild': ctx.guild.id, 'setup': False, 'stage': None, 'users': {f'{author.id}': {'coins': 0, 'treats': 0}})
   messages.append(message.author)
   if len(messages) >= no:
     author = random.choice(messages)
