@@ -212,7 +212,7 @@ class ReferralInput(Modal, title="Reffering system"):
 @candy.command()
 async def register(ctx):
   try:
-    db.getByQuery({"guild":ctx.guild.id})[0]["users"][0][f"{ctx.author.id"]
+    db.getByQuery({"guild":ctx.guild.id})[0]["users"][0][f"{ctx.author.id}"]
     await ctx.send("You are already registered")
   except Exception:
     referrerBtn = Button(label="Refer", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
