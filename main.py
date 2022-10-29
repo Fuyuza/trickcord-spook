@@ -194,7 +194,7 @@ async def fight(ctx):
   ghost = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
   embed = discord.Embed(title='', description=f'Fight starting in')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
-  counter = 4
+  counter
   timerbtn = Button(label=counter, style=discord.ButtonStyle.grey, disabled=True)
   view = View()
   view.add_item(timerbtn)
@@ -211,7 +211,6 @@ async def fight(ctx):
   embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghost} - ❤️ {opponent_health}% | In bag {opponent_candies}")
   embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩🟩")
   hitbttn = hitBtn(label="Hit!", style=discord.ButtonStyle.red)
-  while
   btns = [hitbttn]
   random.shuffle(btns)
   fview = fightView(msg,ghost,opponent_candies,candies)
