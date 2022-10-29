@@ -208,6 +208,7 @@ async def register(ctx):
       embed2 = embed
       referrerBtn = Button(label=f"You are Reffering with {user.name}", style=discord.ButtonStyle.blurple, disabled=True)
       interaction.response.edit_message(embed=embed2, view=view)
+    yesBtn.callback = yesBtn_callback
 
 async def main():
     async with candy:
