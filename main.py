@@ -181,7 +181,7 @@ async def fight(ctx):
     opponent_health = 0
 
 class ReferralInput(Modal, title="Reffering system"):
-  referer_id = TextInput(label="Refferal", style=discord.ButtonStyle.short, default="Discord User Id")
+  referer_id = TextInput(label="Refferal", style=discord.TextStyle.short, default="Discord User Id")
   
   async def on_submit(self, interaction: discord.Interaction):
     view = View()
