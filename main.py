@@ -181,8 +181,8 @@ async def fight(ctx):
     opponent_health = 0
 
 class ReferralInput(Modal, title="Reffering system"):
-  def __init__(self, message):
-    self.message = message
+  def __init__(self):
+    self.message = None
 
   referer_id = TextInput(label="Refferal", style=discord.TextStyle.short, default="Discord User Id")
   
@@ -218,7 +218,9 @@ async def register(ctx):
   view.add_item(referrerBtn)
   msg = await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
   async def referrerBtn_callback(interaction):
-    await interaction.response.send_modal(ReferralInput(msg))
+    modal = ReferralInput()
+    modal.message = msg
+    await interaction.response.send_modal(modal)
   referrerBtn.callback = referrerBtn_callback
 
 async def main():
