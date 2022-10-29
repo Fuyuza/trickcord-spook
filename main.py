@@ -216,9 +216,9 @@ async def register(ctx):
   embed=discord.Embed(title="", description="use below button to refer and fill referer DiscordID then click on confirm button", color=0xE67E22)
   embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
   view.add_item(referrerBtn)
-  await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
+  msg = await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
   async def referrerBtn_callback(interaction):
-    await interaction.response.send_modal(ReferralInput())
+    await interaction.response.send_modal(ReferralInput(msg))
   referrerBtn.callback = referrerBtn_callback
 
 async def main():
