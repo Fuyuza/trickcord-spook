@@ -180,36 +180,38 @@ async def fight(ctx):
     await msg.edit(embed=embed3, view=view)
     opponent_health = 0
 
+class ReferralInput(Modal, title="Reffering system"):
+  referer_id = TextInput(label="Refferal", style=discord.ButtonStyle.short, default="Discord User Id")
+  
+  async def on_submit(self, interaction: discord.Interaction):
+    view = View()
+    refferUser = candy.fetch_user(int(self.referer_id.value))
+    yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
+    editBtn = Button(label="edit", style=discord.ButtonStyle.red)
+    view.add_item(yesBtn)
+    view.add_item(editBtn)
+    await interaction.response.send_message(content=f"Are you sure to refer with {user.name}?", view=view, ephemeral=True)
+    async def yesBtn_callback(self, interaction: discord.Interaction):
+      view.remove_item(yesBtn)
+      view.remove_item(editBtn)
+      referrerBtn = Button(label=f"You are Reffering with {refferUser.name}", style=discord.ButtonStyle.blurple, disabled=True)
+      view.add_item(referrerBtn)
+      embed2=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
+      embed2.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
+      await interaction.response.edit_message(embed=embed2, view=view)
+
 @candy.command()
 async def register(ctx):
-  referralInput = TextInput(label="Referral", style=discord.TextStyle.short, default="Discord User Id")
   referrerBtn = Button(label="Refferal", style=discord.ButtonStyle.blurple)
   view = View()
-  modal = Modal(title="Reffering system")
   embed=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
   embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
   view.add_item(referrerBtn)
   modal.add_item(referralInput)
   await ctx.send(content="Note - _your refferer user must have already registered else you can't reffer with that user_", embed=embed, view=view)
   async def referrerBtn_callback(interaction):
-    await interaction.response.send_modal(modal)
+    await interaction.response.send_modal(ReferralInput())
   referrerBtn.callback = referrerBtn_callback
-  async def on_submit(interaction):
-    view.remove_item(referrerBtn)
-    refferUser = candy.fetch_user(int(referralInput.answer))
-    yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
-    editBtn = Button(label="edit", style=discord.ButtonStyle.red)
-    view.add_item(yesBtn)
-    view.add_item(editBtn)
-    await interaction.response.send_message(content=f"Are you sure to refer with {user.name}?", view=view)
-    async def yesBtn_callback(interaction):
-      view.remove_item(yesBtn)
-      view.remove_item(editBtn)
-      embed2 = embed
-      referrerBtn = Button(label=f"You are Reffering with {user.name}", style=discord.ButtonStyle.blurple, disabled=True)
-      interaction.response.edit_message(embed=embed2, view=view)
-    yesBtn.callback = yesBtn_callback
-  referralInput.callback = on_submit
 
 async def main():
     async with candy:
