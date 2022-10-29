@@ -187,7 +187,7 @@ async def fight(ctx):
   health = 100
   opponent_health = 100
   opponent_candies = random.randint(10, 50)
-  ghosts = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
+  ghost = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
   embed = discord.Embed(title='', description=f'Fight starting in')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
   counter = 3
@@ -204,13 +204,18 @@ async def fight(ctx):
     await msg.edit(embed=embed2, view=view)
     await asyncio.sleep(1)
   embed2 = discord.Embed(title='')
-  embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghosts} - ❤️ {opponent_health}% | In bag {opponent_candies}")
+  embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghost} - ❤️ {opponent_health}% | In bag {opponent_candies}")
   embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩🟩")
-  btns = [hitBtn()]
+  hitbttn = hitBtn()
+  hitbttn.message = msg
+  hitbttn.ghost = ghost
+  hitbttn.opponent_candies = opponent_candies
+  hitbttn.candies = candies
+  btns = []
   random.shuffle(btns)
   fview = fightView()
   for btn in btns:
-    fview(btn)
+    fview.add_item(btn)
   await msg.edit(embed=embed2, view=fview)
 
 class ReferralInput(Modal, title="Reffering system"):
