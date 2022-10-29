@@ -165,15 +165,16 @@ class hitBtn(Button):
     hitbttn = hitBtn(label="Hit!", style=discord.ButtonStyle.red)
     fview.add_item(hitbttn)
     still = 1
+    msg = self.view.message
     while still > 0:
       if self.view.opponent_health < 0:
-        await self.message.edit(embed=embed1)
+        await msg.edit(embed=embed1)
         still = 0
       elif self.view.health < 0:
-        await self.message.edit(embed=embed2)
+        await msg.edit(embed=embed2)
         still = 0
       elif self.view.health > 0:
-        await self.view.message.edit(embed=embed3, view=view)
+        await msg.edit(embed=embed3, view=view)
     
 class fightView(View):
   def __init__(self, message, ghost, opponent_candies, candies):
