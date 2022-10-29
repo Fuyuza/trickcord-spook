@@ -211,17 +211,21 @@ class ReferralInput(Modal, title="Reffering system"):
 
 @candy.command()
 async def register(ctx):
-  referrerBtn = Button(label="Refer", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
-  view = View()
-  embed=discord.Embed(title="", description="use below button to refer and fill referer DiscordID then click on confirm button", color=0xE67E22)
-  embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
-  view.add_item(referrerBtn)
-  msg = await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
-  async def referrerBtn_callback(interaction):
-    modal = ReferralInput()
-    modal.message = msg
-    await interaction.response.send_modal(modal)
-  referrerBtn.callback = referrerBtn_callback
+  try:
+    db.getByQuery({"guild":ctx.guild.id})[0]["users"][0][f"{ctx.author.id"]
+    await ctx.send("You are already registered")
+  except Exception:
+    referrerBtn = Button(label="Refer", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
+    view = View()
+    embed=discord.Embed(title="", description="use below button to refer and fill referer DiscordID then click on confirm button", color=0xE67E22)
+    embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
+    view.add_item(referrerBtn)
+    msg = await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
+    async def referrerBtn_callback(interaction):
+      modal = ReferralInput()
+      modal.message = msg
+      await interaction.response.send_modal(modal)
+    referrerBtn.callback = referrerBtn_callback
 
 async def main():
     async with candy:
