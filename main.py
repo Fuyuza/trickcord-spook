@@ -196,7 +196,7 @@ async def register(ctx):
   referrerBtn.callback = referrerBtn_callback
   async def on_submit(interaction):
     view.remove_item(referrerBtn)
-    refferUser = candy.fetch_user(int(referralInput.value[0]))
+    refferUser = candy.fetch_user(int(referralInput.answer))
     yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
     editBtn = Button(label="edit", style=discord.ButtonStyle.red)
     view.add_item(yesBtn)
