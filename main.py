@@ -141,6 +141,46 @@ async def on_message(message):
     messages.clear()
   await candy.process_commands(message)
 
+class hitBtn(Button):
+  def init(self):
+    self.message = None
+    self.ghost = None
+    self.opponent_candies = None
+    self.candies = None
+  hitbtn = Button(label="Hit!", style=discord.ButtonStyle.red)
+  
+  async def hitbtn_callback(self, interaction: discord.Interaction):
+    self.view.opponent_health -= random.randint(5, 15)
+    self.view.hitbox[0] += 1
+    self.view.hitbox[1] += 1
+    hit = self.view.hitbox
+    if 2 < hit[0] < 5:
+      hit[1] = "🟧"
+    elif 2 > hit < 5:
+      hit[1] = "🟩"
+    elif 2 < hit > 5:
+      hit[1] = "🟥"
+    embed1 = discord.Embed(title='')
+    embed1.add_field(name="Congratulations",value=f"👑 {interaction.user.name} You won {self.opponent_candies} treats from 🎃 {self.ghost}")
+    embed2 = discord.Embed(title='')
+    embed2.add_field(name="Better luck next time!",value=f"Sorry {interaction.user.name} {self.gbost} 🎃 has won the match 20% treats from your treat bag will gived to {self.ghost}")
+    embed3 = discord.Embed(title='')
+    embed3.add_field(name="Players",value=f"{interaction.user.name} - ❤️ {self.health}% | In bag {self.candies}\n{self.ghost} - ❤️ {self.opponent_health}% | In bag {self.opponent_candies}")
+    embed3.add_field(name="Tiers",value=f"{self.view.tiers[5]} {self.view.tiers[4]} {self.view.tiers[3]} {self.view.tiers[2]} {self.view.tiers[1]} {self.view.tiers[0]}")
+    if self.view.opponent_health < 1:
+      await self.message.edit(embed=embed1)
+    elif self.view.health < 1:
+      await self.message.edit(embed=embed2)
+    else:
+      await self.message.edit(embed=embed3)
+    
+class fightView(View):
+  def __init__(self):
+    self.opponent_health = 100
+    self.health = 100
+    self.tiers = [🟩,🟩,🟩,🟩,🟩,🟩]
+    self.hitbox = [0,0]
+
 @candy.command()
 async def fight(ctx):
   candies = db.getByQuery({'guild': ctx.guild.id})[0]['users'][0][f"{ctx.author.id}"]['treats']
@@ -148,17 +188,14 @@ async def fight(ctx):
   opponent_health = 100
   opponent_candies = random.randint(10, 50)
   ghosts = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
-  embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{ghosts} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
+  embed = discord.Embed(title='', description=f'Fight starting in')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
   counter = 3
   timerbtn = Button(label=counter, style=discord.ButtonStyle.grey, disabled=True)
   view = View()
   view.add_item(timerbtn)
-  hit = Button(label='Hit!', style=discord.ButtonStyle.red)
-  miss = Button(label='Miss', style=discord.ButtonStyle.grey)
-  miss2 = Button(label='Miss', style=discord.ButtonStyle.grey)
   msg = await ctx.send(embed=embed, view=view)
-  for i in range(3):
+  for i in range(4):
     counter = counter - 1
     view.remove_item(timerbtn)
     timerbtn = Button(label=str(counter), style=discord.ButtonStyle.grey, disabled=True)
@@ -166,34 +203,15 @@ async def fight(ctx):
     embed2 = embed
     await msg.edit(embed=embed2, view=view)
     await asyncio.sleep(1)
-    view.remove_item(timerbtn)
-  previoushuffle = None
-  hit_counter = [0,0]
-  attackmoji = ['🟩','🟩','🟩','🟩','🟩']
-  while opponent_health > 0:
-    view.remove_item(hit)
-    view.remove_item(miss)
-    view.remove_item(miss2)
-    embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{ghosts} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
-    embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
-    btns = [hit, miss, miss2]
-    random.shuffle(btns) if btns!=previoushuffle else random.shuffle(btns)
-    previoushuffle = btns
-    for btn in btns:
-      view.add_item(btn)
-    await msg.edit(embed=embed3, view=view)
-    if 2 < hit_counter[0] < 5:
-      attackmoji[hit_counter[1]] = "🟧"
-    elif 2 > hit_counter[0] < 5:
-      pass
-    elif 2 > hit_counter[0] > 5:
-      attackmoji[hit_counter[1]] = "🟥"
-    async def hit_callback(interaction):
-      damage = random.randint(5,15)
-      opponent_health = opponent_health - damage
-      hit_counter[0] = hit_counter[0] + 1
-      hit_counter[1] = hit_counter[1] + 1
-    hit.callback = hit_callback
+  embed2 = discord.Embed(title='')
+  embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghosts} - ❤️ {opponent_health}% | In bag {opponent_candies}")
+  embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩")
+  btns = [hitBtn()]
+  random.shuffle(btns)
+  fview = fightView()
+  for btn in btns:
+    fview(btn)
+  await msg.edit(embed=embed2, view=fview)
 
 class ReferralInput(Modal, title="Reffering system"):
   def init(self):
