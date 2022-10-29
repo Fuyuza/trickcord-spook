@@ -162,7 +162,8 @@ class hitBtn(Button):
     embed3.add_field(name="Players",value=f"{interaction.user.name} - ❤️ {self.view.health}% | In bag {self.view.candies}\n{self.view.ghost} - ❤️ {self.view.opponent_health}% | In bag {self.view.opponent_candies}")
     embed3.add_field(name="Tiers",value=f"{self.view.tiers[5]} {self.view.tiers[4]} {self.view.tiers[3]} {self.view.tiers[2]} {self.view.tiers[1]} {self.view.tiers[0]}")
     fview = fightView(self.view.message,self.view.ghost,self.view.opponent_candies,self.view.candies)
-    fview.add_item(hitBtn)
+    hitbttn = hitBtn(label="Hit!", style=discord.ButtonStyle.red)
+    fview.add_item(hitbttn)
     still = 1
     while still > 0:
       if self.view.opponent_health < 0:
