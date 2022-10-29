@@ -144,6 +144,7 @@ async def on_message(message):
 class hitBtn(Button):
   async def callback(self, interaction: discord.Interaction):
     self.view.opponent_health -= random.randint(5, 15)
+    self.view.hitbox[0] += 1
     if self.view.hitbox[0] == 5:
       self.view.hitbox[1] += 1
     hit = self.view.hitbox
@@ -160,18 +161,18 @@ class hitBtn(Button):
     embed3 = discord.Embed(title='')
     embed3.add_field(name="Players",value=f"{interaction.user.name} - ❤️ {self.view.health}% | In bag {self.view.candies}\n{self.view.ghost} - ❤️ {self.view.opponent_health}% | In bag {self.view.opponent_candies}")
     embed3.add_field(name="Tiers",value=f"{self.view.tiers[5]} {self.view.tiers[4]} {self.view.tiers[3]} {self.view.tiers[2]} {self.view.tiers[1]} {self.view.tiers[0]}")
-    fview = fightView()
+    fview = fightView(self.view.message,self.view.ghost,self.view.opponent_candies,self.view.candies)
     fview.add_item(hitBtn)
     still = 1
     while still > 0:
       if self.view.opponent_health < 0:
-        await self.message.edit(embed=embed1)
+        await self.view.message.edit(embed=embed1)
         still = 0
       elif self.view.health < 0:
-        await self.message.edit(embed=embed2)
+        await self.view.message.edit(embed=embed2)
         still = 0
       elif self.view.health > 0:
-        await self.message.edit(embed=embed3, view=view)
+        await self.view.message.edit(embed=embed3, view=view)
     
 class fightView(View):
   def __init__(self, message, ghost, opponent_candies, candies):
