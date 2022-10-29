@@ -190,7 +190,7 @@ class ReferralInput(Modal, title="Reffering system"):
     editBtn = Button(label="edit", style=discord.ButtonStyle.red)
     view.add_item(yesBtn)
     view.add_item(editBtn)
-    await interaction.response.send_message(content=f"Are you sure to refer with {user.name}?", view=view, ephemeral=True)
+    await interaction.response.send_message(content=f"Are you sure to refer with {refferUser.name}?", view=view, ephemeral=True)
     async def yesBtn_callback(self, interaction: discord.Interaction):
       view.remove_item(yesBtn)
       view.remove_item(editBtn)
@@ -207,7 +207,6 @@ async def register(ctx):
   embed=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
   embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
   view.add_item(referrerBtn)
-  modal.add_item(referralInput)
   await ctx.send(content="Note - _your refferer user must have already registered else you can't reffer with that user_", embed=embed, view=view)
   async def referrerBtn_callback(interaction):
     await interaction.response.send_modal(ReferralInput())
