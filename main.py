@@ -181,6 +181,9 @@ async def fight(ctx):
     opponent_health = 0
 
 class ReferralInput(Modal, title="Reffering system"):
+  def __init__(self, message):
+    self.message = message
+
   referer_id = TextInput(label="Refferal", style=discord.TextStyle.short, default="Discord User Id")
   
   async def on_submit(self, interaction: discord.Interaction):
@@ -200,7 +203,7 @@ class ReferralInput(Modal, title="Reffering system"):
       view.add_item(confirmBtn)
       embed2=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
       embed2.set_author(name=f"{candy.user.name} registration", icon_url=interaction.user.display_avatar)
-      await interaction.edit_original_response(embed=embed2, view=view)
+      await message.edit(embed=embed2, view=view)
     async def editBtn_callback(interaction: discord.Interaction):
       await interaction.response.send_modal(ReferralInput())
     yesBtn.callback = yesBtn_callback
@@ -208,12 +211,12 @@ class ReferralInput(Modal, title="Reffering system"):
 
 @candy.command()
 async def register(ctx):
-  referrerBtn = Button(label="Refferal", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
+  referrerBtn = Button(label="Refer", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
   view = View()
-  embed=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
+  embed=discord.Embed(title="", description="use below button to refer and fill referer DiscordID then click on confirm button", color=0xE67E22)
   embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
   view.add_item(referrerBtn)
-  await ctx.send(content="Note - _your refferer user must have already registered else you can't reffer with that user_", embed=embed, view=view)
+  await ctx.send(content="Note - _your referer user must have already registered else you can't refer with that user_", embed=embed, view=view)
   async def referrerBtn_callback(interaction):
     await interaction.response.send_modal(ReferralInput())
   referrerBtn.callback = referrerBtn_callback
