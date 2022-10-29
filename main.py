@@ -154,6 +154,9 @@ async def fight(ctx):
   timerbtn = Button(label=counter, style=discord.ButtonStyle.grey, disabled=True)
   view = View()
   view.add_item(timerbtn)
+  hit = Button(label='Hit!', style=discord.ButtonStyle.red)
+  miss = Button(label='Miss', style=discord.ButtonStyle.grey)
+  miss2 = Button(label='Miss', style=discord.ButtonStyle.grey)
   msg = await ctx.send(embed=embed, view=view)
   for i in range(3):
     counter = counter - 1
@@ -168,11 +171,11 @@ async def fight(ctx):
   hit_counter = [0,0]
   attackmoji = ['🟩','🟩','🟩','🟩','🟩']
   while opponent_health > 0:
+    view.remove_item(hit)
+    view.remove_item(miss)
+    view.remove_item(miss2)
     embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
     embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
-    hit = Button(label='Hit!', style=discord.ButtonStyle.red)
-    miss = Button(label='Miss', style=discord.ButtonStyle.grey)
-    miss2 = Button(label='Miss', style=discord.ButtonStyle.grey)
     btns = [hit, miss, miss2]
     random.shuffle(btns) if btns!=previoushuffle else random.shuffle(btns)
     previoushuffle = btns
