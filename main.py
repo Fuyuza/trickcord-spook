@@ -174,7 +174,7 @@ class hitBtn(Button):
         await msg.edit(embed=embed2)
         still = 0
       elif self.view.health > 0:
-        await msg.edit(embed=embed3, view=view)
+        await msg.edit(embed=embed3, view=fview)
     
 class fightView(View):
   def __init__(self, message, ghost, opponent_candies, candies):
