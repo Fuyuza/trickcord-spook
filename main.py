@@ -176,6 +176,7 @@ class hitBtn(Button):
     
 class fightView(View):
   def __init__(self):
+    super().__init__()
     self.opponent_health = 100
     self.health = 100
     self.tiers = ["🟩","🟩","🟩","🟩","🟩","🟩"]
@@ -190,7 +191,7 @@ async def fight(ctx):
   ghost = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
   embed = discord.Embed(title='', description=f'Fight starting in')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
-  counter = 3
+  counter = 4
   timerbtn = Button(label=counter, style=discord.ButtonStyle.grey, disabled=True)
   view = View()
   view.add_item(timerbtn)
@@ -211,7 +212,7 @@ async def fight(ctx):
   hitbttn.ghost = ghost
   hitbttn.opponent_candies = opponent_candies
   hitbttn.candies = candies
-  btns = []
+  btns = [hitbttn]
   random.shuffle(btns)
   fview = fightView()
   for btn in btns:
