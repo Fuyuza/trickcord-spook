@@ -178,7 +178,7 @@ class fightView(View):
   def __init__(self):
     self.opponent_health = 100
     self.health = 100
-    self.tiers = [🟩,🟩,🟩,🟩,🟩,🟩]
+    self.tiers = ["🟩","🟩","🟩","🟩","🟩","🟩"]
     self.hitbox = [0,0]
 
 @candy.command()
@@ -205,7 +205,7 @@ async def fight(ctx):
     await asyncio.sleep(1)
   embed2 = discord.Embed(title='')
   embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghosts} - ❤️ {opponent_health}% | In bag {opponent_candies}")
-  embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩")
+  embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩🟩")
   btns = [hitBtn()]
   random.shuffle(btns)
   fview = fightView()
