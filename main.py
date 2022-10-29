@@ -147,7 +147,7 @@ async def fight(ctx):
   health = 100
   opponent_health = 100
   opponent_candies = random.randint(10, 50)
-  ghosts = ['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton']
+  ghosts = random.choice(['spirit', 'ghost', 'zombie', 'headless man', 'angry jack o lantern', 'monster', 'vampire', 'angry bat', 'skeleton'])
   embed = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
   embed.set_author(name=candy.user.name, icon_url='https://cdn.discordapp.com/avatars/1033705675370537010/9ae462928f0b7fbdcf0e4f1287e35267.webp?size=2048')
   counter = 3
@@ -174,7 +174,7 @@ async def fight(ctx):
     view.remove_item(hit)
     view.remove_item(miss)
     view.remove_item(miss2)
-    embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
+    embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{ghost} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
     embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
     btns = [hit, miss, miss2]
     random.shuffle(btns) if btns!=previoushuffle else random.shuffle(btns)
