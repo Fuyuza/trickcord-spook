@@ -194,9 +194,9 @@ async def register(ctx):
   async referrerBtn_callback(interaction):
     await interaction.response.send_modal(modal)
   referrerBtn.callback = referrerBtn_callback
-  async on_submit(interaction):
+  async def on_submit(interaction):
     view.remove_item(referrerBtn)
-    refferUser = candy.fetch_user(int(referralInput.answer[0]))
+    refferUser = candy.fetch_user(int(referralInput.value[0]))
     yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
     editBtn = Button(label="edit", style=discord.ButtonStyle.red)
     view.add_item(yesBtn)
@@ -209,6 +209,7 @@ async def register(ctx):
       referrerBtn = Button(label=f"You are Reffering with {user.name}", style=discord.ButtonStyle.blurple, disabled=True)
       interaction.response.edit_message(embed=embed2, view=view)
     yesBtn.callback = yesBtn_callback
+  referralInput.callback = on_submit
 
 async def main():
     async with candy:
