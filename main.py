@@ -165,9 +165,10 @@ async def fight(ctx):
     await asyncio.sleep(1)
     view.remove_item(timerbtn)
   previoushuffle = None
+  hit_counter = [0,0]
+  attackmoji = ['🟩','🟩','🟩','🟩','🟩']
   while opponent_health > 0:
     embed3 = discord.Embed(title='', description=f'Players - \n{ctx.author} - ❤️ {health}% | In bag [{candies}]\n{random.choice(ghosts)} - ❤️ {opponent_health}% | In bag [{opponent_candies}]')
-    attackmoji = ['🟩','🟩','🟩','🟩','🟩']
     embed3.add_field(name='Attack', value=f'{attackmoji[0]} {attackmoji[1]} {attackmoji[2]} {attackmoji[3]} {attackmoji[4]}')
     hit = Button(label='Hit!', style=discord.ButtonStyle.red)
     miss = Button(label='Miss', style=discord.ButtonStyle.grey)
@@ -178,7 +179,18 @@ async def fight(ctx):
     for btn in btns:
       view.add_item(btn)
     await msg.edit(embed=embed3, view=view)
-    opponent_health = 0
+    if 2 < hit_counter[0] < 5:
+      attackmoji[hit_counter[1]] = "🟧"
+    elif 2 > hit_counter[0] < 5:
+      pass
+    elif 2 > hit_counter[0] > 5:
+      attackmoji[hit_counter[1]] = "🟥"
+    async def hit_callback(interaction):
+      damage = random.randint(5,15)
+      opponent_health = opponent_health - damage
+      hit_counter[0] = hit_counter[0] + 1
+      hit_counter[1] = hit_counter[1] + 1
+    hit.callback = hit_callback
 
 class ReferralInput(Modal, title="Reffering system"):
   def init(self):
