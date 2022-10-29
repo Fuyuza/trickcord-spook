@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from discord.ui import View, Button
+from discord.ui import View, Button, TextInput, Modal
 import random
 import asyncio
 from pysondb import db
@@ -179,6 +179,35 @@ async def fight(ctx):
       view.add_item(btn)
     await msg.edit(embed=embed3, view=view)
     opponent_health = 0
+
+@candy.command()
+async def register(ctx):
+  referralInput = TextInput(label="Referral", style=discord.TextStyle.short, default="Discord User Id")
+  referrerBtn = Button(label="Refferal", style=discord.ButtonStyle.blurple)
+  view = View()
+  modal = Modal(title="Reffering system")
+  embed=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
+  embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
+  view.add_item(reffererBtn)
+  modal.add_item(refferralInput)
+  await ctx.send(content="Note - _your refferer user must have already registered else you can't reffer with that user_", embed=embed, view=view)
+  async referrerBtn_callback(interaction):
+    await interaction.response.send_modal(modal)
+  referrerBtn.callback = referrerBtn_callback
+  async on_submit(interaction):
+    view.remove_item(referrerBtn)
+    refferUser = candy.fetch_user(int(referralInput.answer[0]))
+    yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
+    editBtn = Button(label="edit", style=discord.ButtonStyle.red)
+    view.add_item(yesBtn)
+    view.add_item(editBtn)
+    await interaction.response.send_message(content=f"Are you sure to refer with {user.name}?", view=view)
+    async def yesBtn_callback(interaction):
+      view.remove_item(yesBtn)
+      view.remove_item(editBtn)
+      embed2 = embed
+      referrerBtn = Button(label=f"You are Reffering with {user.name}", style=discord.ButtonStyle.blurple, disabled=True)
+      interaction.response.edit_message(embed=embed2, view=view)
 
 async def main():
     async with candy:
