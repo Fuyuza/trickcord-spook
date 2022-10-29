@@ -144,14 +144,14 @@ async def on_message(message):
 class hitBtn(Button):
   async def hitbtn_callback(self, interaction: discord.Interaction):
     self.view.opponent_health -= random.randint(5, 15)
-    self.view.hitbox[0] += 1
-    self.view.hitbox[1] += 1
+    if self.view.hitbox[0] == 5:
+      self.view.hitbox[1] += 1
     hit = self.view.hitbox
     if 2 < hit[0] < 5:
       hit[1] = "🟧"
-    elif 2 > hit < 5:
+    elif 2 > hit[0] < 5:
       hit[1] = "🟩"
-    elif 2 < hit > 5:
+    elif 2 < hit[0] > 5:
       hit[1] = "🟥"
     embed1 = discord.Embed(title='')
     embed1.add_field(name="Congratulations",value=f"👑 {interaction.user.name} You won {self.view.opponent_candies} treats from 🎃 {self.view.ghost}")
@@ -160,12 +160,18 @@ class hitBtn(Button):
     embed3 = discord.Embed(title='')
     embed3.add_field(name="Players",value=f"{interaction.user.name} - ❤️ {self.view.health}% | In bag {self.view.candies}\n{self.view.ghost} - ❤️ {self.view.opponent_health}% | In bag {self.view.opponent_candies}")
     embed3.add_field(name="Tiers",value=f"{self.view.tiers[5]} {self.view.tiers[4]} {self.view.tiers[3]} {self.view.tiers[2]} {self.view.tiers[1]} {self.view.tiers[0]}")
-    if self.view.opponent_health < 1:
-      await self.message.edit(embed=embed1)
-    elif self.view.health < 1:
-      await self.message.edit(embed=embed2)
-    else:
-      await self.message.edit(embed=embed3)
+    fview = fightView()
+    fview.add_item(hitBtn)
+    still = 1
+    while still > 0:
+      if self.view.opponent_health < 0:
+        await self.message.edit(embed=embed1)
+         still = 0
+      elif self.view.health < 0:
+        await self.message.edit(embed=embed2)
+         still = 0
+      elif self.view.health > 0:
+        await self.message.edit(embed=embed3, view=view)
     
 class fightView(View):
   def __init__(self, message, ghost, opponent_candies, candies):
@@ -205,6 +211,7 @@ async def fight(ctx):
   embed2.add_field(name="Players",value=f"{ctx.author.name} - ❤️ {health}% | In bag {candies}\n{ghost} - ❤️ {opponent_health}% | In bag {opponent_candies}")
   embed2.add_field(name="Tiers",value="🟩🟩🟩🟩🟩🟩")
   hitbttn = hitBtn(label="Hit!", style=discord.ButtonStyle.red)
+  while
   btns = [hitbttn]
   random.shuffle(btns)
   fview = fightView(msg,ghost,opponent_candies,candies)
