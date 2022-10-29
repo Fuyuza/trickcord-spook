@@ -200,7 +200,7 @@ class ReferralInput(Modal, title="Reffering system"):
       view.add_item(confirmBtn)
       embed2=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
       embed2.set_author(name=f"{candy.user.name} registration", icon_url=interaction.user.display_avatar)
-      await interaction.response.edit_original_response(embed=embed2, view=view)
+      await interaction.edit_original_response(embed=embed2, view=view)
     async def editBtn_callback(interaction: discord.Interaction):
       await interaction.response.send_modal(ReferralInput())
     yesBtn.callback = yesBtn_callback
