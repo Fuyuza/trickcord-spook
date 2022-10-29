@@ -166,10 +166,10 @@ class hitBtn(Button):
     while still > 0:
       if self.view.opponent_health < 0:
         await self.message.edit(embed=embed1)
-         still = 0
+        still = 0
       elif self.view.health < 0:
         await self.message.edit(embed=embed2)
-         still = 0
+        still = 0
       elif self.view.health > 0:
         await self.message.edit(embed=embed3, view=view)
     
