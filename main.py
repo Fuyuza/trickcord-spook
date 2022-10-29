@@ -185,7 +185,7 @@ class ReferralInput(Modal, title="Reffering system"):
   
   async def on_submit(self, interaction: discord.Interaction):
     view = View()
-    refferUser = candy.fetch_user(int(self.referer_id.value))
+    refferUser = await candy.fetch_user(int(self.referer_id.value))
     yesBtn = Button(label="Yes!", style=discord.ButtonStyle.green)
     editBtn = Button(label="edit", style=discord.ButtonStyle.red)
     view.add_item(yesBtn)
