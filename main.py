@@ -175,7 +175,7 @@ class fightView(View):
     self.hitbox = [0,0]
     self.message = message
     self.ghost = ghost
-    self.opponent_candies
+    self.opponent_candies = opponent_candies
     self.candies = candies
     super().__init__()
 
