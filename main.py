@@ -191,7 +191,7 @@ async def register(ctx):
   view.add_item(reffererBtn)
   modal.add_item(refferralInput)
   await ctx.send(content="Note - _your refferer user must have already registered else you can't reffer with that user_", embed=embed, view=view)
-  async referrerBtn_callback(interaction):
+  async def referrerBtn_callback(interaction):
     await interaction.response.send_modal(modal)
   referrerBtn.callback = referrerBtn_callback
   async def on_submit(interaction):
