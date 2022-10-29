@@ -194,11 +194,11 @@ class ReferralInput(Modal, title="Reffering system"):
     async def yesBtn_callback(interaction: discord.Interaction):
       view.remove_item(yesBtn)
       view.remove_item(editBtn)
-      referrerBtn = Button(label=f"You are Reffering with {refferUser.name}", style=discord.ButtonStyle.blurple, disabled=True)
+      referrerBtn = Button(label=f"You are Reffering with {refferUser.name}", style=discord.ButtonStyle.blurple, disabled=True, emoji=candy.get_emoji(1035846332709085235))
       view.add_item(referrerBtn)
       embed2=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
       embed2.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
-      await interaction.response.edit_message(embed=embed2, view=view)
+      await interaction.response.edit_original_response(embed=embed2, view=view)
     async def editBtn_callback(interaction: discord.Interaction):
       await interaction.response.send_modal(ReferralInput())
     yesBtn.callback = yesBtn_callback
@@ -206,7 +206,7 @@ class ReferralInput(Modal, title="Reffering system"):
 
 @candy.command()
 async def register(ctx):
-  referrerBtn = Button(label="Refferal", style=discord.ButtonStyle.blurple)
+  referrerBtn = Button(label="Refferal", style=discord.ButtonStyle.blurple, emoji=candy.get_emoji(1035846332709085235))
   view = View()
   embed=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
   embed.set_author(name=f"{candy.user.name} registration", icon_url=ctx.author.avatar)
