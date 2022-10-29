@@ -142,7 +142,7 @@ async def on_message(message):
   await candy.process_commands(message)
 
 class hitBtn(Button):
-  async def hitbtn_callback(self, interaction: discord.Interaction):
+  async def callback(self, interaction: discord.Interaction):
     self.view.opponent_health -= random.randint(5, 15)
     if self.view.hitbox[0] == 5:
       self.view.hitbox[1] += 1
