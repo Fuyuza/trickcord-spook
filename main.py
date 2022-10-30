@@ -221,7 +221,7 @@ async def fight(ctx):
     fview.add_item(btn)
   await msg.edit(embed=embed2, view=fview)
 
-class ReferralInput(Modal, title="Reffering system"):
+class ReferralInput(Modal, title="Refering system"):
   def init(self):
     self.message = None
 
@@ -240,6 +240,8 @@ class ReferralInput(Modal, title="Reffering system"):
       view.remove_item(editBtn)
       referrerBtn = Button(label=f"You are Reffering with {refferUser.name}", style=discord.ButtonStyle.blurple, disabled=True, emoji=candy.get_emoji(1035846332709085235))
       confirmBtn = Button(label="Confirm", style=discord.ButtonStyle.green)
+      view.remove_item(referrerBtn)
+      view.remove_item(confirmBtn)
       view.add_item(referrerBtn)
       view.add_item(confirmBtn)
       embed2=discord.Embed(title="", description="use below button to referred and fill refferer DiscordID then click on confirm button", color=0xE67E22)
