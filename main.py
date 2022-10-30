@@ -7,6 +7,7 @@ from pysondb import db
 import wavelink
 import jishaku
 import Paginator
+import datetime
 
 candy = commands.Bot(command_prefix="!h", intents=discord.Intents().all(), strip_after_prefix=True)
 candy.remove_command('help')
@@ -269,6 +270,21 @@ async def register(ctx):
       modal.message = msg
       await interaction.response.send_modal(modal)
     referrerBtn.callback = referrerBtn_callback
+
+@candy.command()
+async def daily(ctx):
+  treats = random.randint(20,50)
+  user = db.getByQuery({"guild":ctx.guild.id})[0]["users"][0][f"{ctx.author.id}"]
+   if user["daily_timeout"]:
+    timestamp = int(user["daily_timeout"])
+    timeout = datetime.datetime.fromtimestamp(timestamp).day
+    now = datetime.datetime.utcnow().day
+    if now == timeout:
+      await ctx.send("You can only do daily once in 1 day.")
+    elif now != timeout:
+      userR = user["treats"] + treats
+      d_t = ctx.message.created_at().timestamp
+      db.updateByQuery({"guild":ctx.guild.id},{f"{ctx.author.id}": {"treats": userR, "daily_timeout": d_t})
 
 async def main():
     async with candy:
