@@ -275,7 +275,7 @@ async def register(ctx):
 async def daily(ctx):
   treats = random.randint(20,50)
   user = db.getByQuery({"guild":ctx.guild.id})[0]["users"][0][f"{ctx.author.id}"]
-   if user["daily_timeout"]:
+  if user["daily_timeout"]:
     timestamp = int(user["daily_timeout"])
     timeout = datetime.datetime.fromtimestamp(timestamp).day
     now = datetime.datetime.utcnow().day
