@@ -284,7 +284,7 @@ async def daily(ctx):
     elif now != timeout:
       userR = user["treats"] + treats
       d_t = ctx.message.created_at().timestamp
-      db.updateByQuery({"guild":ctx.guild.id},{f"{ctx.author.id}": {"treats": userR, "daily_timeout": d_t})
+      db.updateByQuery({"guild":ctx.guild.id},{f"{ctx.author.id}": {"treats": userR, "daily_timeout": d_t}})
 
 async def main():
     async with candy:
